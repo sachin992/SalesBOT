@@ -1,0 +1,2 @@
+TABLE customers: customer_id (int), name (varchar(255)), region (varchar(50)), industry (varchar(100))
+TABLE sales: order_id (int), customer_id (int), amount (decimal(12,2)), product (varchar(255)), created_at (datetime), quarter (varchar(10))
