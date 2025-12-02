@@ -9,8 +9,8 @@ import os
 import openai
 import sqlparse
 from openai import OpenAI
+openai.api_key = "your-openai-api-key"
 
-openai.api_key = "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"
 
 
 # api/views.py
