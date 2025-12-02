@@ -1,165 +1,108 @@
-📄 Sales GPT — Streamlit Application
+📈🤖 SalesBOT – AI-Powered Email Automation
 
-An AI-powered SQL generation and data exploration tool with authentication, chat history, secure cookies, and interactive visualizations.
 
-🚀 Overview
 
-Sales GPT is an intelligent chat-based analytics tool built using Streamlit, Django REST API, and JWT-based authentication.
-Users can type natural language questions, and the app generates SQL, fetches data from the backend API, and displays results with interactive charts.
 
-This project supports:
 
-✔ Secure Login / Registration
-✔ JWT Access + Refresh Tokens
-✔ Encrypted Cookies
-✔ Persistent Chat History (per user)
-✔ SQL Generation (via backend API)
-✔ Query Execution + Table Display
-✔ Advanced Charts (Line, Bar, Area)
-✔ Dark Mode UI
-✔ Beautiful Chat UI with animations
-✔ CSV Downloading
 
-🏗️ Project Structure
-project/
+
+
+SalesBOT is an AI-powered assistant that automates email processing, generates context-aware responses using AI, and integrates with a knowledge base for accurate answers. Built with Django, Streamlit, and MySQL, it simplifies sales and support workflows.
+
+🚀 Features
+
+📧 Automatic Email Processing – Fetch unread emails and extract user queries.
+
+🧠 AI-Powered Responses – Use embeddings, RAG, and LLMs to generate accurate replies.
+
+📚 Knowledge Base Integration – Search FAQs, documents, and internal resources.
+
+⚡ Workflow Automation – Update email status (read/replied/pending) automatically.
+
+🗃️ Analytics & Tracking – Store queries, responses, and confidence levels in MySQL.
+
+👥 Multi-User Support – Handles multiple senders and queries simultaneously.
+
+🛠 Tech Stack
+<p> <a href="https://www.python.org/" target="_blank"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" width="40" height="40" alt="Python"/></a> <a href="https://www.djangoproject.com/" target="_blank"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/django/django-original.svg" width="40" height="40" alt="Django"/></a> <a href="https://streamlit.io/" target="_blank"><img src="https://streamlit.io/images/brand/streamlit-mark-color.svg" width="40" height="40" alt="Streamlit"/></a> <a href="https://www.mysql.com/" target="_blank"><img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" width="40" height="40" alt="MySQL"/></a> </p>
+📦 Project Structure
+SALESBOT/
 │
-├── chat_data/                # Stores per-user chat history (JSON files)
-├── pages/
-│   ├── login.py              # Login/Registration page
-│   ├── chat.py               # Main Sales GPT chat interface
-│
-└── README.md                 # Documentation
+├── images/                  # Screenshots for README
+├── salesbot/
+│   ├── api/                 # API endpoints & backend logic
+│   ├── salesbot/            # Django app modules
+│   ├── streamlit/           # Streamlit frontend
+│   │   ├── chat_data/       # User chat history
+│   │   └── pages/           # Streamlit pages
+│   │       ├── chat.py
+│   │       └── login.py
+│   │   └── app.py           # Streamlit main app
+│   └── manage.py            # Django manage script
+├── venv/                    # Virtual environment
+└── README.md
 
-🔧 Tech Stack
-Frontend
+🔧 Setup Instructions
 
-Streamlit
+1️⃣ Clone the repository
 
-Pandas
-
-Requests
-
-EncryptedCookieManager
-
-Custom HTML + CSS for chat UI
-
-Streamlit Charts (Line, Bar, Area)
-
-Backend
-
-Django REST Framework (DRF)
-
-API Endpoints:
-
-/api/login/ — Login + Issue JWT
-
-/api/register/ — Create account
-
-/api/token/refresh/ — Refresh access token
-
-/api/query/ — Generate SQL + execute database query
-
-🔐 Authentication Flow
-
-User logs in → Receives access + refresh tokens
-
-Tokens stored in encrypted cookies (EncryptedCookieManager)
-
-Access token is attached in every API request
-
-If access token expires → Backend returns 401
-
-App auto-refreshes token using refresh token
-
-If refresh token is invalid → Redirect to Login
-
-💾 Chat Persistence
-
-Each user gets a UUID stored in cookies:
-
-sales_gpt_user_id = <unique-id>
+git clone https://github.com/<username>/<repo>.git
+cd SALESBOT
 
 
-Chat history is saved in:
+2️⃣ Create & activate virtual environment
 
-chat_data/<user-id>.json
-
-
-This allows persistent chat history even after page refresh.
-
-💬 Features Explained
-1. Chat Interface
-
-Modern chat bubble design
-
-Fade-in animations & typing indicator
-
-Both user and bot messages preserved
-
-Supports SQL output via <details> block
-
-2. SQL Generation
-
-Backend returns:
-
-{
-  "sql": "SELECT * FROM sales WHERE date > '2023-01-01'",
-  "result": { "rows": [...] }
-}
+python -m venv venv
+source venv/bin/activate     # Mac/Linux
+venv\Scripts\activate        # Windows
 
 
-App displays formatted SQL + results.
+3️⃣ Install dependencies
 
-3. Data Visualization
-
-Once a dataframe is returned:
-
-Table view (st.dataframe)
-
-Auto-detect numeric columns
-
-Supports:
-
-Line Chart
-
-Bar Chart
-
-Area Chart
-
-CSV Export
-
-⚙️ Environment Variables
-
-Update inside your Streamlit code:
-
-API_URL = "http://127.0.0.1:8000/api/"
-REFRESH_URL = "http://127.0.0.1:8000/api/token/refresh/"
+pip install -r requirements.txt
 
 
-Change to production when deploying.
+4️⃣ Run Django Backend
 
-🧪 Running Locally
-1️⃣ Install Dependencies
-pip install streamlit pandas requests python-dotenv streamlit-cookies-manager
-
-2️⃣ Start Django Backend
+cd salesbot
 python manage.py runserver
 
 
-Backend will run at:
+Backend runs at: http://127.0.0.1:8000/
 
-http://127.0.0.1:8000/
+5️⃣ Run Streamlit Frontend
 
-3️⃣ Start Streamlit Frontend
-streamlit run pages/login.py
+streamlit run salesbot/streamlit/app.py
 
-🛡️ Security Notes
+🖥️ How It Works
 
-Use a 32-character secret key for cookies:
+Fetch Emails: Reads unread emails using Microsoft Graph API.
 
-password="your_very_long_secure_key_32_chars"
+Extract Queries: Parses email content to extract user queries.
 
+Retrieve Knowledge: Performs similarity search on FAQs or documents using embeddings.
 
-Do not commit chat history files to GitHub
+Generate Response: AI creates context-aware replies using RAG & LLM.
 
-Always use HTTPS in production
+Send Reply: Sends email and updates status automatically.
+
+Track & Analyze: Stores query, response, and confidence in MySQL.
+
+📷 Screenshots
+![Home Page](images/HomePage.png)
+![Login Page](images/LoginPage.png)
+![Query Response_1](images/Query1_withOutput.png)
+![Query Response_2](images/Query2_withOutput.png)
+![Query Response_3](images/Query3_withOutput.png)
+![Query Response_4](images/Query34_withOutput.png)
+![Graph Response](images/GraphOutput.png)
+
+🎯 Use Cases
+
+Automate customer support emails
+
+Streamline sales workflow
+
+Extract knowledge from internal documents
+
+Track query-response analytics
